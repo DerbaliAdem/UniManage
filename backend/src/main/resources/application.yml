@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: unimanage-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/unimanage}
+    username: ${DATABASE_USERNAME:unimanage}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+
+app:
+  security:
+    jwt-secret: ${APP_JWT_SECRET}
+    jwt-issuer: ${APP_JWT_ISSUER:unimanage-api}
+    jwt-ttl: ${APP_JWT_TTL:PT30M}
+    cors-origin: ${APP_CORS_ORIGIN:http://localhost:5173}
+  bootstrap:
+    admin-email: ${APP_BOOTSTRAP_ADMIN_EMAIL:}
+    admin-password: ${APP_BOOTSTRAP_ADMIN_PASSWORD:}
+    admin-name: ${APP_BOOTSTRAP_ADMIN_NAME:UniManage Administrator}

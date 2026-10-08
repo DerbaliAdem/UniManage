@@ -47,6 +47,8 @@ function StudentAttendance() {
     totalClasses,
   );
 
+  const totalMissed = totalClasses - totalAttended;
+
   const warningSubjects = attendanceData.filter(
     (item) => calculatePercentage(item.attended, item.total) <= 75,
   );
@@ -88,7 +90,7 @@ function StudentAttendance() {
           </div>
 
           <p className="mt-3 text-sm text-gray-500">
-            {totalAttended} attended out of {totalClasses} classes
+            {totalAttended} attended · {totalMissed} missed · {totalClasses} classes total
           </p>
         </div>
 
@@ -100,9 +102,9 @@ function StudentAttendance() {
             </h2>
 
             <p className="mt-2 text-sm text-yellow-200/80">
-              You are approaching the attendance limit in{" "}
-              {warningSubjects.length} subject
-              {warningSubjects.length > 1 ? "s" : ""}.
+              {warningSubjects.length === 1
+                ? `${warningSubjects[0].subject} is at or below the example minimum of 75%. Review your subject attendance and try to attend upcoming classes.`
+                : `${warningSubjects.length} subjects are at or below the example minimum of 75%. Review your subject attendance and try to attend upcoming classes.`}
             </p>
           </div>
         )}
@@ -132,7 +134,7 @@ function StudentAttendance() {
                       </h3>
 
                       <p className="mt-1 text-sm text-gray-500">
-                        {item.attended} / {item.total} classes attended
+                        {item.attended} attended · {item.total - item.attended} missed · {item.total} total
                       </p>
                     </div>
 
@@ -140,6 +142,12 @@ function StudentAttendance() {
                       {percentage}%
                     </span>
                   </div>
+
+                  {percentage <= 75 && (
+                    <p className="mt-3 text-sm text-yellow-200/80">
+                      This is at or below the example 75% minimum. Your department’s actual attendance policy may differ.
+                    </p>
+                  )}
 
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-gray-800">
                     <div

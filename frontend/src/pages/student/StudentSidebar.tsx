@@ -1,7 +1,11 @@
 
+import { LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../api/authApi";
 
 function StudentSidebar() {
+  const navigate = useNavigate();
   const navigationItems = [
     {
       label: "Dashboard",
@@ -24,6 +28,10 @@ function StudentSidebar() {
       exact: false,
     },
   ];
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <aside className="flex min-h-screen w-64 flex-col border-r border-gray-800 bg-gray-950 p-5 text-white">
@@ -81,10 +89,18 @@ function StudentSidebar() {
             </p>
           </div>
         </NavLink>
+        <button
+          type="button"
+          onClick={handleLogout}
+          aria-label="Log out"
+          className="mt-2 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 transition hover:bg-gray-900 hover:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        >
+          <LogOut size={17} aria-hidden="true" />
+          Log out
+        </button>
       </div>
     </aside>
   );
 }
 
 export default StudentSidebar;
-

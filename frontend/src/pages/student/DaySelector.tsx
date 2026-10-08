@@ -1,36 +1,16 @@
-
-type Day = "yesterday" | "today" | "tomorrow";
+import type { Day } from "../../types/schedule";
 
 type DaySelectorProps = {
   selectedDay: Day;
   onDayChange: (day: Day) => void;
 };
 
-function DaySelector({
-  selectedDay,
-  onDayChange,
-}: DaySelectorProps) {
-  const days: Day[] = [
-    "yesterday",
-    "today",
-    "tomorrow",
-  ];
+const days: Day[] = ["yesterday", "today", "tomorrow"];
 
+function DaySelector({ selectedDay, onDayChange }: DaySelectorProps) {
   return (
-    <div className="flex gap-3">
-      {days.map((day) => (
-        <button
-          key={day}
-          onClick={() => onDayChange(day)}
-          className={`rounded-lg px-5 py-3 capitalize transition ${
-            selectedDay === day
-              ? "bg-blue-600 text-white"
-              : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-          }`}
-        >
-          {day}
-        </button>
-      ))}
+    <div className="grid grid-cols-3 gap-1 rounded-lg border border-gray-800 bg-gray-950 p-1" role="group" aria-label="Choose timetable day">
+      {days.map((day) => <button key={day} type="button" aria-pressed={selectedDay === day} onClick={() => onDayChange(day)} className={`rounded-md px-3 py-2 text-sm capitalize transition sm:px-4 ${selectedDay === day ? "bg-gray-800 font-medium text-white" : "text-gray-400 hover:text-white"}`}>{day}</button>)}
     </div>
   );
 }
